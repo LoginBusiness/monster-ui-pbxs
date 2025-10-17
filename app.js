@@ -856,12 +856,12 @@ define(function(require) {
 			}
 
 			if (!endpointData.server_type) {
-				$('.info_pbx', endpointHtml).hide();
-			}
+			$('.info_pbx', endpointHtml).hide();
+		}
 
-			$('.pbx-brand-list .pbx', endpointHtml).click(function() {
-				$('.pbx-brand-list .pbx', endpointHtml).removeClass('selected').css('opacity', '0.2');
-				$(this).addClass('selected');
+		$('.pbx-brand-list .pbx', endpointHtml).on('click', function() {
+			$('.pbx-brand-list .pbx', endpointHtml).removeClass('selected').css('opacity', '0.2');
+			$(this).addClass('selected');
 
 				$('.selected-pbx', endpointHtml).html($('.pbx-brand-list .selected', endpointHtml).data('pbx_name'));
 				$('.info_pbx', endpointHtml).slideDown();
