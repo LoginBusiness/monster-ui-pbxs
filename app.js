@@ -993,7 +993,7 @@ define(function(require) {
 			pbxsManager.find('.search-query').on('keyup', function() {
 				var input = $(this),
 					rows = numbersWrapper.find('.number-wrapper'),
-					searchString = $.trim(input.val().toLowerCase());
+					searchString = (input.val() || '').trim().toLowerCase();
 
 				if (!searchString) {
 					rows.show();
@@ -1335,7 +1335,7 @@ define(function(require) {
 			parent.find('#unassigned_numbers .search-query').on('keyup', function() {
 				var input = $(this),
 					rows = $('#unassigned_numbers .content .unassigned-number', parent),
-					searchString = $.trim(input.val().toLowerCase().replace(/[^0-9]/g, '')),
+					searchString = (input.val() || '').toLowerCase().replace(/[^0-9]/g, '').trim(),
 					matches = [],
 					cache = {};
 
