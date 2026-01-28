@@ -727,7 +727,7 @@ define(function(require) {
 
 			if (validated) {
 				if (step === 1) {
-					if ($('.pbx-brand-list .pbx.selected', parent).size() === 0) {
+					if ($('.pbx-brand-list .pbx.selected', parent).length === 0) {
 						error_message += '<br/>- ' + self.i18n.active().no_pbx_selected;
 						validated = false;
 					}
@@ -850,18 +850,18 @@ define(function(require) {
 				}
 			});
 
-			if (endpointData.server_type && $('.pbx-brand-list .pbx.selected', endpointHtml).size() === 0) {
+			if (endpointData.server_type && $('.pbx-brand-list .pbx.selected', endpointHtml).length === 0) {
 				$('.pbx-brand-list .pbx.other', endpointHtml).addClass('selected');
 				$('.pbx-brand-list .pbx:not(.selected)', endpointHtml).css('opacity', '0.2');
 			}
 
 			if (!endpointData.server_type) {
-				$('.info_pbx', endpointHtml).hide();
-			}
+			$('.info_pbx', endpointHtml).hide();
+		}
 
-			$('.pbx-brand-list .pbx', endpointHtml).click(function() {
-				$('.pbx-brand-list .pbx', endpointHtml).removeClass('selected').css('opacity', '0.2');
-				$(this).addClass('selected');
+		$('.pbx-brand-list .pbx', endpointHtml).on('click', function() {
+			$('.pbx-brand-list .pbx', endpointHtml).removeClass('selected').css('opacity', '0.2');
+			$(this).addClass('selected');
 
 				$('.selected-pbx', endpointHtml).html($('.pbx-brand-list .selected', endpointHtml).data('pbx_name'));
 				$('.info_pbx', endpointHtml).slideDown();
@@ -993,7 +993,7 @@ define(function(require) {
 			pbxsManager.find('.search-query').on('keyup', function() {
 				var input = $(this),
 					rows = numbersWrapper.find('.number-wrapper'),
-					searchString = $.trim(input.val().toLowerCase());
+					searchString = (input.val() || '').trim().toLowerCase();
 
 				if (!searchString) {
 					rows.show();
@@ -1008,7 +1008,7 @@ define(function(require) {
 			});
 
 			pbxsManager.on('click', '.number-wrapper', function(event) {
-				if ($(event.target).closest('.number-options').size() < 1) {
+				if ($(event.target).closest('.number-options').length < 1) {
 					var toggleNumberSelected = function(element, updateCb) {
 							var currentCb = element.find('input[type="checkbox"]'),
 								cbValue = currentCb.prop('checked');
@@ -1025,7 +1025,7 @@ define(function(require) {
 
 					var links = pbxsManager.find('#trigger_links');
 
-					pbxsManager.find('.number-wrapper.selected').size() > 0 ? links.show('fast') : links.hide();
+					pbxsManager.find('.number-wrapper.selected').length > 0 ? links.show('fast') : links.hide();
 				}
 			});
 
@@ -1120,7 +1120,7 @@ define(function(require) {
 			pbxsManager.find('#remove_numbers').on('click', function() {
 				var phone_number,
 					$selected_numbers = pbxsManager.find('.number-wrapper.selected'),
-					nb_numbers = $selected_numbers.size();
+					nb_numbers = $selected_numbers.length;
 
 				if (nb_numbers > 0) {
 					monster.ui.confirm(self.i18n.active().remove_number_confirmation, function() {
@@ -1301,7 +1301,7 @@ define(function(require) {
 				var dataPhoneNumber,
 					phone_number,
 					$selected_numbers = $('.unassigned-number.selected', parent),
-					nb_numbers = $selected_numbers.size(),
+					nb_numbers = $selected_numbers.length,
 					refresh_list = function() {
 						nb_numbers--;
 						if (nb_numbers === 0) {
@@ -1335,7 +1335,7 @@ define(function(require) {
 			parent.find('#unassigned_numbers .search-query').on('keyup', function() {
 				var input = $(this),
 					rows = $('#unassigned_numbers .content .unassigned-number', parent),
-					searchString = $.trim(input.val().toLowerCase().replace(/[^0-9]/g, '')),
+					searchString = (input.val() || '').toLowerCase().replace(/[^0-9]/g, '').trim(),
 					matches = [],
 					cache = {};
 
